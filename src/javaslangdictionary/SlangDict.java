@@ -1,34 +1,65 @@
 package javaslangdictionary;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class SlangDict {
-    private HashMap<String, List<String>> dict;
+    private final HashMap<String, List<String>> dict;
     
     public SlangDict() {
         dict = new HashMap<>();
     }
     
-    public Slang toSlang(Map.Entry<String, List<String>> entry) {
-        return new Slang(entry.getKey(), entry.getValue());
+    public Set<Map.Entry<String, List<String>>> getEntrySet() {
+        return dict.entrySet();
+    }
+    public SlangWord toSlangWord(Map.Entry<String, List<String>> entry) {
+        return new SlangWord(entry.getKey(), entry.getValue());
     }
     
-    public Slang findSlang(String slang) {
+    public SlangWord findWord(String slang) {
         if (dict.get(slang) == null)
             return null;
-        return new Slang(slang, dict.get(slang));
+        return new SlangWord(slang, dict.get(slang));
     }
-    
-    public void addSlang(Slang slang) {
-        dict.put(slang.slang, slang.meanings);
+    public void addWord(SlangWord slang) {
+        dict.put(slang.word, slang.definitions);
     }
-    
-    public void updateSlang(Slang slang) {
-        dict.put(slang.slang, slang.meanings);
+    public void updateWord(SlangWord slang) {
+        dict.put(slang.word, slang.definitions);
     }
-
-    public void deleteSlang(String slang) {
+    public void deleteWord(String slang) {
         dict.remove(slang);
     }
     
+    public ArrayList<SlangWord> findByKeyword(String kw) {
+        ArrayList<SlangWord> res = new ArrayList<>();
+        for (Map.Entry<String, List<String>> entry : dict.entrySet()) {
+            for (String def : entry.getValue()) {
+                if (def.contains(kw)) {
+                    res.add(toSlangWord(entry));
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+    
+    public SlangWord getRandomWord() {
+        SlangWord res = new SlangWord();
+        int idx = new Random().nextInt(dict.entrySet().size());
+        int i = 0;
+        for (Map.Entry<String, List<String>> entry : dict.entrySet()) {
+            if (i == idx) {
+                res = toSlangWord(entry);
+                break;
+            }
+            ++i;
+        }
+        return res;
+    }
 }
