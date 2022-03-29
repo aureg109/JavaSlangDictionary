@@ -1,8 +1,6 @@
 package javaslangdictionary;
 
-import java.util.List;
-import java.util.Arrays;
-import java.util.ArrayList;
+import java.util.*;
 
 public class SlangWord {
     public String word;
@@ -20,11 +18,16 @@ public class SlangWord {
         word = slangData[0];
         definitions = Arrays.asList(slangData[1].split("\\| "));
     }
+    
+    public String getWord() {
+        return word;
+    }
 
+    @Override
     public String toString() {
-        String res = "Slang: " + word + "\nMeanings: ";
+        String res = "Slang: " + word + "\nDefinitions: ";
         for (int i = 0; i < definitions.size(); ++i)
-            res += definitions.get(i) + (i < definitions.size() - 1 ? " | " : "");
+            res += definitions.get(i) + (i < definitions.size() - 1 ? "| " : "");
         return res;
     }
 }
