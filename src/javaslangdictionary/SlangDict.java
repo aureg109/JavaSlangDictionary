@@ -1,24 +1,35 @@
 package javaslangdictionary;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 
 public class SlangDict {
-    private final HashMap<String, List<String>> dict;
+    private final TreeMap<String, List<String>> dict;
     
     public SlangDict() {
-        dict = new HashMap<>();
+        dict = new TreeMap<>();
     }
     
     public Set<Map.Entry<String, List<String>>> getEntrySet() {
         return dict.entrySet();
     }
+    
     public SlangWord toSlangWord(Map.Entry<String, List<String>> entry) {
         return new SlangWord(entry.getKey(), entry.getValue());
+    }
+    
+    @Override
+    public String toString() {
+        String res = "";
+        
+        ArrayList<SlangWord> list = new ArrayList<>();
+        for (Map.Entry<String, List<String>> entry : dict.entrySet()) {
+            list.add(toSlangWord(entry));
+        }
+        
+        for (SlangWord word : list)
+            res += word.toString() + "\n";
+        
+        return res;
     }
     
     public SlangWord findWord(String slang) {
