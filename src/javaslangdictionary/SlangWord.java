@@ -22,6 +22,9 @@ public class SlangWord {
     public String getWord() {
         return word;
     }
+    public List<String> getDefinitions() {
+        return definitions;
+    }
 
     @Override
     public String toString() {
